@@ -1,0 +1,66 @@
+\documentclass[18pt]{amsart}
+\usepackage[margin=2cm]{geometry} \geometry{a4paper} % or letter or a5paper or ... etc
+% \geometry{landscape} % rotated page geometry
+
+\title{Developing your own Madagascar programs}
+\author{Jeffrey Shragge}
+\date{January 8th 2015} 
+
+\begin{document}
+
+\maketitle
+
+In this exercise you will complete the ``geophysics" into a simple C and/or f90 program, and then compile and use it to run a sample calculation.
+
+\section{Building Your Program}
+\begin{enumerate}
+\item Take your copy of SCHOOL\_CODE.tgz and do the following steps:  
+\begin{itemize}
+\item {\bf mkdir \$RSFSRC/user/yourname/}
+\item {\bf  cp SCHOOL\_CODE.tgz \$RSFSRC/user/yourname/ }
+\item {\bf cd  \$RSFSRC/user/yourname/}
+\item {\bf tar -xzvf SCHOOL\_CODE.tgz}\\
+\end{itemize}
+
+\item Check to see whether your compilers are working.  Open your {\it Sconstruct} file with your favourite text editor (e.g., {\bf vi SConstruct}) and see which programs are included in the {\it targets.c} and {\it targets.f90} blocks.  This is where you list the names of your programs (in C and F90, respectively) to let Madagascar know which programs to compile.  Program names must begin with an upper-case {\bf M} for the {\bf M}ain program.  You see that there are C and F90 {\it helloworld} programs.  Compile these by doing the following steps in your \$RSFSRC/user/yourname/ directory:
+\begin{itemize}
+\item {\bf scons sfhelloworld\_C} 
+\item {\bf scons sfhelloworld\_fortran}
+\item Now test the C program out with: {\bf ./sfhelloworld\_C}
+\item Now test the F90 program out with: {\bf ./sfhelloworld\_fortran}
+\item How many cores does your computer have?\\
+\end{itemize}
+
+\item You have a copy of an {\it almost finished} ``vector addition'' code in C and f90.
+\begin{itemize}
+\item \$RSFSRC/user/yourname/Mvectoradd\_C.c
+\item \$RSFSRC/user/yourname/Mvectoradd\_fortran.f90
+\end{itemize}
+Your assignment is to put the ``geophysics'' into one of the vector addition codes.  Open the file in a text editor and complete the ${\bf C=A+B}$ assignment.  
+\begin{itemize}
+\item Hint: Vector index in F90 is A(); Vector index in C is A[].\\
+\end{itemize}
+
+\item After completing this task build the code in the local directory by:
+\begin{itemize}
+\item Type: {\bf scons sfvectoradd\_C}
+\item Type: {\bf scons sfvectoradd\_fortran}\\
+\end{itemize}
+
+\item You may (optionally) install the C or f90 program into \$RSFROOT/bin/ by 
+\begin{itemize}
+\item Type: {\bf cd \$RSFSRC/ ; scons install}\\
+\end{itemize}
+
+\section{Testing Your Program}
+
+\item Go to your working directory (e.g. {\bf cd /path/to/work/dir/}).  You will have to make a {\it SConstruct} file and add the rules we need to test your {\it sfvectoradd\_C} or {\it sfvectoradd\_fortran} program.\\
+
+\item Create two random vectors, {\it A.rsf} and {\it B.rsf}, of the same length and add them together using a Madagascar program. There is more than one way to do this: Try searching {\bf sfdoc -k math}\\
+
+\item Construct a {\it Flow} rule to obtain {\it C.rsf} from existing files {\it A.rsf} and {\it B.rsf} using your {\it sfvectoradd\_C} or {\it sfvectoradd\_fortran} program.\\	
+
+\item Do you know that you got the correct answer? Let's test our program against a (correct) Madagascar program: {\it sfmath}.  Write a final {\it Flow()} rule to do this.  
+\end{enumerate}
+
+\end{document}
